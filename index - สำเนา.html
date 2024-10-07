@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบลงทะเบียนบัญชีผู้ใช้งาน</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+
+        .container{
+            padding: 20px;
+            width: 100%;
+            height: 48vw;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+          
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            justify-content: center;
+ 
+        }
+        .card-container{
+
+            background-color: #ffffff;
+       
+            margin-top: 20px;
+            width: 500px;
+            height: 350px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 5px 0px #dbd8d8;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+        }
+
+            .form-control{
+                    margin: auto;
+                width: 85%;
+                text-align: center;
+                justify-content: center;
+            }
+
+      
+
+
+    iframe {
+        justify-content: center;
+        display: block;
+        border: none;         /* Reset default border */
+        height: 80vh;        /* Viewport-relative units */
+        width: 65vw;
+      margin-top: 10px;
+        overflow:hidden!important;}
+        html{overflow:scroll!important;
+            overflow-x:hidden;
+            overflow-y:hidden;
+        
+      }
+      .login-image {
+         
+          
+            width: 50px; /* Adjust the size as needed */
+            height: auto; /* Maintain aspect ratio */
+            display: block;
+            margin: 0 auto 20px; /* Center the image and add margin */
+        }
+
+      
+
+    </style>
+    
+   
+
+</head>
+<body>
+    <h1 style="text-align: center;">ระบบลงทะเบียนบัญชีผู้ใช้งาน</h1> 
+    <div class="container my-3">
+       
+        <div  id="form-area">
+           
+            <form id="registerForm" class="card-container">
+                <img src="img/register.png" alt="User Login" class="login-image"> <!-- Change the image URL as needed -->
+                <h2>สร้างบัญชีผู้ใช้</h2>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="ป้อนอีเมลของคุณ" name="email" class="form-control"required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="ป้อนรหัสผ่านของคุณ" name="password" class="form-control"required>
+                </div>
+                <div class="form-group my-3">
+                    <button type="submit" class="btn btn-primary">ลงทะเบียน</button>
+                </div>
+            </form>
+                
+       
+            <form id="loginForm" class="card-container">
+                <img src="img/login.png" alt="User Login" class="login-image"> <!-- Change the image URL as needed -->
+                <h2>เข้าสู่ระบบ</h2>
+                <div class="form-group" >
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="ป้อนอีเมลของคุณ" name="email" class="form-control"required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="ป้อนรหัสผ่านของคุณ" name="password" class="form-control" required>
+                </div>
+                <div class="form-group my-3">
+                    <button type="submit" class="btn btn-success">เข้าสู่ระบบ</button>
+                </div>
+            </form>
+        </div>
+
+
+
+        <div id="profile">
+            <h3 id="welcome">สวัสดีผู้ใช้ระบบ</h3>
+            <button id="logout" class="btn btn-danger">ออกจากระบบ</button>
+            <button id="classroom" class="btn btn-success" onclick="openClassroom">เข้าสู่ห้องเรียน</button>
+            <button id="classroom" class="btn btn-warning" onclick="openClassroom">ดูรายชื่อนักเรียน</button>
+            <button id="classroom" class="btn btn-primary" onclick="openClassroom">แก้ไขข้อมูลส่วนตัว</button>
+            <iframe id="iframe" src="student/index.html" frameborder="0" ></iframe>
+            <iframe id="iframe2" src="https://sivapol-39216.web.app/" frameborder="0" ></iframe>
+        </div>
+    </div>
+    <script src="app.js" type="module"></script>
+</body>
+</html>
