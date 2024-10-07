@@ -1,1 +1,24 @@
 ตัวอย่างการเขียนโปรแกมเชื่อมต่อฐานข้อมูล Firebase ด้วยการใช้ API  Authentication ซึ่งเป็นบริการที่มีให้บริการฟรีบน Firedbase ครับ..
+
+ตัวอย่างการอิมพอร์ต API เพื่อทำการโค้ดคำสั่งใน JS File  
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+import {getAuth,createUserWithEmailAndPassword,onAuthStateChanged,signOut,signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+const firebaseConfig = {
+   apiKey: "AIzaSyA019g3xChv5n_N1Zc5RRxmO-EG-brJ0OY",
+   authDomain: "sivapol-39216.firebaseapp.com",
+   projectId: "sivapol-39216",
+   storageBucket: "sivapol-39216.appspot.com",
+   messagingSenderId: "142165691245",
+   appId: "1:142165691245:web:8eaa567a5dd1d3055f6864"
+ };
+
+
+1)การใช้งานก็สมัครใช้บริการ Firebase ให้เรียบร้อยก่อนนะครับ
+จากนั้นก็ติดตั้งตัวแปลภาษา Nod.js ตามลิงค์ด้านล่างนี้
+https://nodejs.org/en
+
+2)ติดตั้งโปรแกม VScode เพื่อใช้แก้ไขสคริปต์ พร้อมกับ extension  live server เพื่อจำรองเซิร์ฟเวอร์ในการรัน ไฟล์ js ครับ
+
+
+
