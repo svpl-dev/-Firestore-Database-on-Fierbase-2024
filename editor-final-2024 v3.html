@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online HTML Editor</title>
+    <style>
+        /* General styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #3b3b3b;
+            color: white;
+            padding: 5px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .brand img {
+            width: 50px;
+        }
+
+        .navbar h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            color: white;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .navbar .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .navbar .menu a:hover {
+            color: #ff69b4;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .dropdown-content select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Main content layout */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 120px); /* Set height based on viewport */
+            padding: 20px;
+            box-sizing: border-box;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            flex-grow: 1; /* Make cards expand to fill available space */
+            min-height: 600px; /* Minimum height for both editor and preview */
+            color: white;
+            padding: 0px;
+            border-radius: 10px;
+        }
+        .card-header{
+            text-align: center;
+            padding: 10px;
+          
+            background-color: #f77104e8;
+
+
+        }
+
+        .card-body {
+            display: flex;
+            flex: 1;
+            padding: 0;
+            display: flex;
+            height: 100%;
+        }
+
+      /*  #editorContainer {
+            width: 100%;
+            height: 100%; /* Editor takes full height 
+        }*/
+
+        #editorContainer, #cssEditorContainer {
+            width: 100%;
+            height: 100%; /* Editor takes full height */
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%; /* Iframe takes full height */
+            border: none;
+            background-color: white;
+        }
+
+      
+
+        /* Button styles */
+        .card-footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .btn {
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-primary {
+            background-color: #007BFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-info {
+            background-color: #f73e06;
+        }
+
+        .btn-info:hover {
+            background-color: #c21daf;
+        }
+
+        .btn-light {
+            background-color: #a3bad4;
+        }
+
+        .btn-light:hover {
+            background-color: #7da1c9;
+        }
+
+        .btn-warning{
+            background-color: #f7039a;
+
+        }
+
+        .btn-warning:hover {
+            background-color: #e2458f;
+        }
+
+
+
+
+
+        .btn-dark {
+            background-color: #343a40;
+        }
+
+        .btn-dark:hover {
+            background-color: #23272b;
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 0px;
+            width: 100%;
+            position: fixed;
+            margin-top: 26px;
+            height: 30px;
+        }
+
+        .footer p{
+
+          margin-top: 5px;
+        }
+        .img-logo{
+             
+          
+            height: 15%; width: 10px;
+        }
+
+    </style>
+
+    <!-- Google Fonts for Thai support -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Monaco Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="brand">
+            <img src="https://cdn-icons-png.flaticon.com/512/136/136528.png" alt="Logo" class="img-logo">
+        </div>
+        <h1>HTML Live Preview Editor</h1>
+        <div class="menu">
+            <a href="https://www.tutorialspoint.com/html/index.htm" target="blank">เรียนรู้ HTML</a>
+            <div class="dropdown">
+                <a href="#">ตั้งค่าโปรแกรม</a>
+                <div class="dropdown-content">
+                    <label for="fontSize">เลือกขนาดอักษร:</label>
+                    <select id="fontSize" onchange="changeFontSize(this.value)">
+                        <option value="12px">ขนาดอักษร 12px</option>
+                        <option value="14px">ขนาดอักษร 14px</option>
+                        <option value="16px">ขนาดอักษร 16px</option>
+                        <option value="18px">ขนาดอักษร 18px</option>
+                        <option value="20px">ขนาดอักษร 20px</option>
+                        <option value="22px">ขนาดอักษร 22px</option>
+                    </select>
+                </div>
+            </div>
+            <a href="#">เกี่ยวกับโปรแกรม</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Editor Section -->
+        <div class="card" id="editor-card">
+            <div class="card-header">ชุดคำสั่ง (Code Veiw)</div>
+            <div class="card-body">
+                <div id="editorContainer"></div>            </div>
+          <!-- <div class="card-footer" id="card-footer">
+                <button class="btn btn-success" onclick="createHtml()">สร้าง HTML ใหม่</button>
+                <button class="btn btn-info" onclick="openCssEditor()">เปิด CSS Editor</button>
+              
+                <button class="btn btn-info" onclick="closeCssEditor()">ปิด CSS Editor</button>
+           
+                <button class="btn btn-primary" onclick="saveFile()">ส่งออก HTML</button>
+                <button class="btn btn-light" onclick="setLightTheme()">ธีมสว่าง</button>
+                <button class="btn btn-dark" onclick="setDarkTheme()">ธีมมืด</button>
+                <button class="btn btn-info" onclick="show()">แสดงผล</button>
+                <button class="btn btn-info" onclick="toggleFullscreen()">แสดงผลเต็มจอ</button>
+            </div>-->
+        </div>
+        <div class="card-footer" id="card-footer">
+            <button class="btn btn-success" onclick="createHtml()">สร้าง HTML ใหม่</button>
+            <button class="btn btn-info" onclick="openCssEditor()">เปิด CSS Editor</button>
+          
+            <button class="btn btn-info" onclick="closeCssEditor()">ปิด CSS Editor</button>
+       
+            <button class="btn btn-primary" onclick="saveFile()">ส่งออก HTML</button>
+            <button class="btn btn-light" onclick="setLightTheme()">ธีมสว่าง</button>
+            <button class="btn btn-dark" onclick="setDarkTheme()">ธีมมืด</button>
+            <button class="btn btn-warning" onclick="show()">แสดงผล</button>
+            <button class="btn btn-info" onclick="toggleFullscreen()">แสดงผลเต็มจอ</button>
+        </div>
+<!-- CSS Editor Section -->
+<div class="card" id="cssEditorCard" style="display:none;">
+    <div class="card-header">CSS Editor</div>
+    <div class="card-body">
+        <div id="cssEditorContainer"></div>
+    </div>
+</div>
+
+        <!-- Live Preview Section -->
+        <div class="card">
+            <div class="card-header">แสดงผล (Live Preview)</div>
+            <div class="card-body">
+                <iframe id="result"></iframe>
+            </div>
+            
+            <div class="card-footer">
+
+                <button class="btn btn-info" onclick="unshow()">กลับหน้า editor</button>
+            </div>
+
+        </div>
+        
+    </div>
+
+
+
+    <!-- Footer -->
+    <div class="footer">
+        <p class="">Copyright by Sivapol Lanlana 2024. dev by HTML , CSS , js</p>
+    </div>
+
+     <script>
+        var editor;
+        var cssEditor; // Variable for CSS editor
+        var cssEditorVisible = false; // Track if CSS editor is visible
+
+        // Initialize the HTML editor
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs' } });
+        require(['vs/editor/editor.main'], function () {
+            editor = monaco.editor.create(document.getElementById('editorContainer'), {
+
+                value: `<!DOCTYPE html>
+<html lang="th">
+<head>
+    <title>โปรแกรม HTML Editor</title>
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>ยินดีต้อนรับสู่ HTML Editor!</h1>
+    <p>คุณสามารถแก้ไขโค้ดด้านบนแล้วคลิก "แสดงผล" เพื่อดูการแสดงผลที่นี่</p>
+</body>
+</html>`,
+                language: 'html',
+                theme: 'vs-dark',
+                automaticLayout: true
+            });
+
+            // Auto update live preview when content changes
+            editor.onDidChangeModelContent(function() {
+                executeCode(); // Call function to update live preview
+            });
+        });
+       
+          ///////////สร้างไฟล์ htl////////////
+        function createHtml() {
+            const htmlContent = editor.getValue();
+            const iframe = document.getElementById('result');
+            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDocument.open();
+            iframeDocument.write(htmlContent);
+            iframeDocument.close();
+        }
+
+        function openCssEditor() {
+            if (!cssEditorVisible) {
+                // Create CSS editor if not already created
+                require(['vs/editor/editor.main'], function () {
+                    cssEditor = monaco.editor.create(document.getElementById('cssEditorContainer'), {
+                        value: `/* ใส่ CSS ของคุณที่นี่ */\nbody {\n    font-family: 'Sarabun', sans-serif;\n}`,
+                        language: 'css',
+                        theme: 'vs-dark',
+                        automaticLayout: true
+                    });
+
+
+                    // Auto update live preview when content changes
+            editor.onDidChangeModelContent(function() {
+                executeCode(); // Call function to update live preview
+            });
+
+                    // Auto update live preview when CSS content changes
+                    cssEditor.onDidChangeModelContent(function() {
+                        updateCssPreview(); // Call function to update live preview
+                    });
+
+                    cssEditorVisible = true; // Set to true when the editor is visible
+                });
+            }
+
+            // Show CSS editor container
+            document.getElementById('cssEditorCard').style.display = 'block';
+            document.getElementById('cssEditorContainer').style.height = '100%'; // Set height to 100%
+            updateCssPreview(); // Update preview when opening the editor
+        }
+            //ซ่อน css editor
+        function closeCssEditor() {
+            document.getElementById('cssEditorCard').style.display = 'none'; // Hide CSS editor card
+           // cssEditorVisible = false; // Set to false when the editor is hidden
+
+        }
+
+
+        //แสดงผล
+        function show() {
+            document.getElementById('cssEditorCard').style.display = 'none'; // Hide CSS editor card
+           // cssEditorVisible = false; // Set to false when the editor is hidden
+          document.getElementById('editor-card').style.display = 'none';
+          
+
+        }
+
+        //คืนค่า editor
+        function unshow() {
+          //  document.getElementById('cssEditorCard').style.display = 'block'; // Hide CSS editor card
+           // cssEditorVisible = false; // Set to false when the editor is hidden
+          // document.getElementById('editor-card').style.display = 'block';
+           document.getElementById('editor-card').style.display = 'block';
+           document.getElementById('edirot-card').style.height = '50%';
+          // document.getElementById('Container').style.height = '50%';
+           document.getElementById('card-footer').style.display = 'block';
+
+           
+        }
+
+
+        function updateCssPreview() {
+            const cssContent = cssEditor.getValue();
+            const htmlContent = editor.getValue();
+            const iframe = document.getElementById('result');
+            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDocument.open();
+            iframeDocument.write(`
+                <style>${cssContent}</style>
+                ${htmlContent}
+            `);
+            iframeDocument.close();
+        }
+
+
+        function executeCode() {
+            createHtml(); // Call to create HTML
+            updateCssPreview(); // Call to update CSS
+        }
+
+        function saveFile() {
+            const htmlContent = editor.getValue();
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'document.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function setLightTheme() {
+            monaco.editor.setTheme('vs');
+        }
+
+        function setDarkTheme() {
+            monaco.editor.setTheme('vs-dark');
+        }
+
+                // Function to toggle fullscreen for live preview
+        function toggleFullscreen() {
+            const iframe = document.getElementById('result');
+            if (!document.fullscreenElement) {
+                iframe.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+// Function กำหนดขนาดตัวอักษรใน editor 
+function changeFontSize(size) {
+            document.getElementById('editorContainer').style.fontSize = size;
+            editor.updateOptions({ fontSize: size });
+            cssEditor.updateOptions({fontSize: size});
+        }
+
+        // Initialize the preview on page load
+        window.onload = function () {
+            setTimeout(updatePreview, 1000);
+        };
+
+
+
+
+
+
+
+
+
+
+        
+    </script>
+
+ 
+
+</body>
+</html>
