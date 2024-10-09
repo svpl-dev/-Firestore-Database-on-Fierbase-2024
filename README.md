@@ -3,9 +3,7 @@
 
 
 ตัวอย่างการเขียนโปรแกรมเชื่อมต่อฐานข้อมูล Firebase databese ด้วยการใช้ API  Authentication สำหรับทำหน้า login เพื่อใช้ยืนยันสิทธิ์ในการเข้าระบบ ซึ่งเป็นบริการที่มีให้บริการฟรีบน Firedbase ครับ..
-
-
-
+ในอนาคตจะพัฒนาเป็น classRoom Module  มีแบบฝึกการโค้ดดิ้งพร้อมระบบวัดความก้าวหน้าของงาน+exam online วัดประเมินผลผู้เรียน พร้อมออกใบ cetificate เมื่อนักเรียนได้คะแนนผ่านเกณฑ์ที่กำหนด..
 
 ![2024-10-07_181035](https://github.com/user-attachments/assets/21039d11-6996-47ac-adfc-539f052aa34e)
 ![2024-10-07_181108](https://github.com/user-attachments/assets/3ded3fc3-7cc5-49e5-b08e-799211ecce37)
