@@ -16,7 +16,7 @@
 
 
 
-ตัวอย่างการอิมพอร์ต API เพื่อทำการโค้ดคำสั่งใน JS File  
+ตัวอย่างการอิมพอร์ต API เพื่อทำการโค้ดคำสั่งใน app.js File  
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
 import {getAuth,createUserWithEmailAndPassword,onAuthStateChanged,signOut,signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
